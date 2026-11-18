@@ -1,0 +1,33 @@
+{
+  "rows":3006,
+  "columns":71,
+  "duplicate_rows":0,
+  "duplicate_commune_year":0,
+  "years":[
+    2015,
+    2021
+  ],
+  "turnout_out_of_range":0,
+  "negative_party_votes":0,
+  "missing_values":{
+    "votes_afg":1503,
+    "votes_agd":1503,
+    "votes_pe2":1503,
+    "votes_pgv":1503,
+    "votes_pml":1503,
+    "votes_pre":1503,
+    "votes_psu":1503,
+    "votes_pvm":1503,
+    "commune_ar":2,
+    "votes_pml1":1503,
+    "votes_sap3":1503,
+    "seats_total":12,
+    "turnout_pct":12,
+    "women_elected_pct":1509,
+    "elected_age_ge55_pct":1509,
+    "elected_age_le34_pct":1509,
+    "elected_age_35_44_pct":1509,
+    "elected_age_45_54_pct":1509,
+    "elected_higher_edu_pct":1509
+  }
+}

@@ -1,0 +1,93 @@
+﻿region,circonscription,typeListe,nSieges,repPctFemmes,repAge34,repAge3544,repAge4554,repAge55,repEduSans,repEdu1aire,repEdu2aire,repEduSup
+Beni-Mellal - Khénifra,Azilal - Demnate,locale,3.0,0.0,0.0,0.6667,0.3333,0.0,9.9999999999989e-05,0.3333,0.3333,0.3333
+Beni-Mellal - Khénifra,Bzou - Ouaouizaght,locale,3.0,0.0,0.0,0.3333,0.0,0.6667,0.0,0.0,0.3333,0.6667
+Beni-Mellal - Khénifra,Béni-Mellal,locale,6.0,0.1667,0.1667,0.0,0.5,0.3333,0.0,0.0,0.3333,0.6667
+Beni-Mellal - Khénifra,Fquih Ben Salah,locale,4.0,0.0,0.0,0.0,0.25,0.75,0.25,0.0,0.25,0.5
+Beni-Mellal - Khénifra,Khénifra,locale,3.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.3333,0.6667
+Beni-Mellal - Khénifra,Khouribga,locale,6.0,0.0,0.0,0.3333,0.0,0.6667,0.0,0.0,0.3333,0.6667
+Casablanca - Settat,Benslimane,locale,3.0,0.0,0.3333,9.9999999999989e-05,0.3333,0.3333,0.0,0.0,0.0,1.0
+Casablanca - Settat,Berrechid,locale,4.0,0.0,0.0,0.25,0.25,0.5,0.0,0.0,0.0,1.0
+Casablanca - Settat,Aïn-Chock,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,0.0,0.0,0.0,1.0
+Casablanca - Settat,Aïn-Sebaâ - Hay-Mohammadi,locale,4.0,0.0,0.0,0.0,0.75,0.25,0.0,0.0,0.25,0.75
+Casablanca - Settat,Al-Fida - Mers-Sultan,locale,3.0,0.0,0.0,0.3333,0.0,0.6667,0.0,0.0,0.3333,0.6667
+Casablanca - Settat,Ben-M'sick,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,0.0,0.0,0.0,1.0
+Casablanca - Settat,Casablanca - Anfa,locale,4.0,0.0,0.0,0.0,0.75,0.25,0.0,0.0,0.5,0.5
+Casablanca - Settat,Hay-Hassani,locale,3.0,0.0,0.0,0.0,0.6667,0.3333,0.0,0.3333,0.0,0.6667
+Casablanca - Settat,Moulay-Rachid,locale,3.0,0.0,0.0,0.3333,0.0,0.6667,0.0,0.0,0.6667,0.3333
+Casablanca - Settat,Sidi-Bernoussi,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,0.0,0.0,0.0,1.0
+Casablanca - Settat,El-Jadida,locale,6.0,0.0,0.0,0.0,0.5,0.5,9.9999999999989e-05,0.3333,0.3333,0.3333
+Casablanca - Settat,Médiouna,locale,2.0,0.0,0.0,0.5,0.5,0.0,0.0,0.0,0.0,1.0
+Casablanca - Settat,Mohammadia,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,0.0,0.0,0.3333,0.6667
+Casablanca - Settat,Nouaceur,locale,3.0,0.0,0.0,0.0,0.0,1.0,0.0,0.3333,0.0,0.6667
+Casablanca - Settat,Settat,locale,6.0,0.0,9.9999999999989e-05,0.3333,0.3333,0.3333,0.0,0.0,0.3333,0.6667
+Casablanca - Settat,Sidi Bennour,locale,4.0,0.0,0.0,0.25,0.5,0.25,0.0,0.0,1.0,0.0
+Dakhla - Oued Ed-Dahab,Aousserd,locale,2.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0
+Dakhla - Oued Ed-Dahab,Oued-Ed-Dahab,locale,2.0,0.0,0.0,0.0,0.5,0.5,0.0,0.0,0.5,0.5
+Drâa - Tafilalet,Errachidia,locale,5.0,0.0,0.0,0.4,0.0,0.6,0.0,0.0,0.4,0.6
+Drâa - Tafilalet,Midelt,locale,3.0,0.0,9.9999999999989e-05,0.3333,0.3333,0.3333,0.0,0.0,0.3333,0.6667
+Drâa - Tafilalet,Ouarzazate,locale,3.0,0.0,0.3333,0.3333,9.9999999999989e-05,0.3333,0.0,0.0,0.3333,0.6667
+Drâa - Tafilalet,Tinghir,locale,3.0,0.0,0.0,0.0,0.0,1.0,9.9999999999989e-05,0.3333,0.3333,0.3333
+Drâa - Tafilalet,Zagora,locale,3.0,0.0,0.0,0.0,0.6667,0.3333,0.0,0.0,0.3333,0.6667
+Fès - Meknès,Boulemane,locale,3.0,0.0,9.9999999999989e-05,0.3333,0.3333,0.3333,0.0,0.0,0.0,1.0
+Fès - Meknès,El-Hajeb,locale,2.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
+Fès - Meknès,Fès-Chamalia,locale,4.0,0.25,0.0,0.25,0.25,0.5,0.0,0.0,0.25,0.75
+Fès - Meknès,Fès-Janoubia,locale,4.0,0.0,0.0,0.0,0.5,0.5,0.0,0.0,0.25,0.75
+Fès - Meknès,Ifrane,locale,2.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.5,0.5
+Fès - Meknès,Meknès,locale,6.0,0.0,0.0,0.1667,0.0,0.8333,0.1667,0.0,0.0,0.8333
+Fès - Meknès,Moulay-Yacoub,locale,2.0,0.0,0.0,0.0,0.5,0.5,0.0,0.5,0.5,0.0
+Fès - Meknès,Sefrou,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,0.0,0.3333,0.0,0.6667
+Fès - Meknès,Karia - Rhafsai,locale,3.0,0.0,0.0,0.0,0.6667,0.3333,9.9999999999989e-05,0.3333,0.3333,0.3333
+Fès - Meknès,Taounate - Tissa,locale,3.0,0.0,0.0,0.0,0.6667,0.3333,0.0,0.3333,0.6667,0.0
+Fès - Meknès,Taza,locale,5.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.4,0.6
+Guelmim - Oued-Noun,Assa-Zag,locale,2.0,0.0,0.0,0.5,0.5,0.0,0.0,0.0,0.0,1.0
+Guelmim - Oued-Noun,Guelmim,locale,2.0,0.0,0.0,0.0,0.5,0.5,0.0,0.0,0.5,0.5
+Guelmim - Oued-Noun,Sidi Ifni,locale,2.0,0.0,0.0,0.5,0.0,0.5,0.0,0.0,0.5,0.5
+Guelmim - Oued-Noun,Tan-Tan,locale,2.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,1.0,0.0
+Laâyoune - Sakia-El-Hamra,Boujdour,locale,2.0,0.0,0.0,0.0,0.5,0.5,0.0,0.0,0.5,0.5
+Laâyoune - Sakia-El-Hamra,Es-Smara,locale,2.0,0.0,0.0,0.5,0.5,0.0,0.0,0.0,0.5,0.5
+Laâyoune - Sakia-El-Hamra,Laâyoune,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,0.0,0.0,1.0,0.0
+Laâyoune - Sakia-El-Hamra,Tarfaya,locale,2.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.5,0.5
+Marrakech - Safi,Al-Haouz,locale,4.0,0.0,0.0,0.0,0.25,0.75,0.0,0.25,0.25,0.5
+Marrakech - Safi,Chichaoua,locale,4.0,0.0,0.0,0.25,0.75,0.0,0.0,0.0,0.25,0.75
+Marrakech - Safi,El-Kelâa-des-Sraghna,locale,4.0,0.0,0.0,0.0,0.25,0.75,0.0,0.0,0.5,0.5
+Marrakech - Safi,Essaouira,locale,4.0,0.0,0.0,0.25,0.5,0.25,0.0,0.0,0.75,0.25
+Marrakech - Safi,Guéliz - Annakhil,locale,3.0,0.3333,0.3333,9.9999999999989e-05,0.3333,0.3333,0.0,0.0,0.3333,0.6667
+Marrakech - Safi,Médina - Sidi-Youssef-Ben-Ali,locale,3.0,0.3333,0.0,0.0,0.6667,0.3333,0.0,0.0,0.3333,0.6667
+Marrakech - Safi,Ménara,locale,3.0,0.0,0.0,0.6667,0.3333,0.0,0.0,0.3333,0.0,0.6667
+Marrakech - Safi,Rehamna,locale,3.0,0.0,0.0,0.3333,0.0,0.6667,0.0,0.0,0.3333,0.6667
+Marrakech - Safi,Safi,locale,6.0,0.0,0.0,0.3333,0.1667,0.5,0.0,0.1667,0.5,0.3333
+Marrakech - Safi,Youssoufia,locale,2.0,0.0,0.0,0.5,0.5,0.0,0.0,0.0,1.0,0.0
+Oriental,Berkane,locale,3.0,0.0,9.9999999999989e-05,0.3333,0.3333,0.3333,0.0,0.0,0.3333,0.6667
+Oriental,Driouch,locale,3.0,0.0,0.0,0.0,0.0,1.0,9.9999999999989e-05,0.3333,0.3333,0.3333
+Oriental,Figuig,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,0.0,0.0,0.0,1.0
+Oriental,Guercif,locale,2.0,0.0,0.0,0.0,0.5,0.5,0.0,0.0,1.0,0.0
+Oriental,Jerada,locale,2.0,0.0,0.0,0.5,0.5,0.0,0.0,0.0,0.5,0.5
+Oriental,Nador,locale,4.0,0.0,0.0,0.5,0.0,0.5,0.0,0.25,0.5,0.25
+Oriental,Oujda - Angad,locale,4.0,0.25,0.0,0.25,0.5,0.25,0.0,0.0,0.0,1.0
+Oriental,Taourirt,locale,2.0,0.0,0.0,0.5,0.0,0.5,0.5,0.5,0.0,0.0
+Rabat - Salé - Kénitra,El-Gharb,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,9.9999999999989e-05,0.3333,0.3333,0.3333
+Rabat - Salé - Kénitra,Kénitra,locale,4.0,0.0,0.0,0.25,0.0,0.75,0.0,0.0,0.25,0.75
+Rabat - Salé - Kénitra,Khémisset - Oulmès,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,0.0,0.0,0.6667,0.3333
+Rabat - Salé - Kénitra,Tifelt - Rommani,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,0.0,0.0,0.0,1.0
+Rabat - Salé - Kénitra,Rabat - Challah,locale,3.0,0.0,0.0,0.3333,0.6667,0.0,0.0,0.0,0.0,1.0
+Rabat - Salé - Kénitra,Rabat - El Mouhit,locale,4.0,0.0,0.0,0.5,0.25,0.25,0.0,0.0,0.25,0.75
+Rabat - Salé - Kénitra,Salé - Al-Jadida,locale,3.0,0.0,0.0,0.0,0.3333,0.6667,0.0,0.0,0.0,1.0
+Rabat - Salé - Kénitra,Salé - Médina,locale,4.0,0.0,0.0,0.0,0.25,0.75,0.0,0.0,0.0,1.0
+Rabat - Salé - Kénitra,Sidi-Kacem,locale,5.0,0.0,0.0,0.2,0.4,0.4,0.0,0.0,0.2,0.8
+Rabat - Salé - Kénitra,Sidi Slimane,locale,3.0,0.0,0.3333,9.9999999999989e-05,0.3333,0.3333,0.0,0.0,0.3333,0.6667
+Rabat - Salé - Kénitra,Skhirate - Témara,locale,4.0,0.0,0.0,0.0,0.75,0.25,0.0,0.25,0.25,0.5
+Souss - Massa,Agadir - Ida-ou-Tanane,locale,4.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0
+Souss - Massa,Chtouka - Aït-Baha,locale,3.0,0.0,0.3333,9.9999999999989e-05,0.3333,0.3333,0.0,0.0,0.3333,0.6667
+Souss - Massa,Inézgane - Aït-Melloul,locale,3.0,0.0,0.3333,9.9999999999989e-05,0.3333,0.3333,0.0,0.0,0.3333,0.6667
+Souss - Massa,Taroudannt - Al-Janoubia,locale,4.0,0.0,0.0,0.0,0.25,0.75,0.0,0.0,0.0,1.0
+Souss - Massa,Taroudannt - Chamalia,locale,3.0,0.0,0.3333,9.9999999999989e-05,0.3333,0.3333,0.0,0.0,0.3333,0.6667
+Souss - Massa,Tata,locale,2.0,0.0,0.0,0.5,0.0,0.5,0.0,0.0,1.0,0.0
+Souss - Massa,Tiznit,locale,2.0,0.5,0.5,0.0,0.5,0.0,0.0,0.0,0.5,0.5
+Tanger - Tétouan - Al Hoceima,Al-Hoceïma,locale,4.0,0.0,0.0,0.0,0.25,0.75,0.0,0.0,0.25,0.75
+Tanger - Tétouan - Al Hoceima,Chefchaouen,locale,4.0,0.0,0.0,0.5,0.5,0.0,0.0,0.0,0.0,1.0
+Tanger - Tétouan - Al Hoceima,Fahs - Anjra,locale,2.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,1.0,0.0
+Tanger - Tétouan - Al Hoceima,Larache,locale,4.0,0.0,0.0,0.0,0.0,1.0,0.0,0.5,0.0,0.5
+Tanger - Tétouan - Al Hoceima,M'Diq - Fnideq,locale,2.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0
+Tanger - Tétouan - Al Hoceima,Ouezzane,locale,3.0,0.0,0.0,0.0,0.6667,0.3333,0.0,0.0,0.6667,0.3333
+Tanger - Tétouan - Al Hoceima,Tanger - Assilah,locale,5.0,0.0,0.0,0.2,0.6,0.2,0.0,0.0,0.4,0.6
+Tanger - Tétouan - Al Hoceima,Tétouan,locale,5.0,0.0,0.0,0.2,0.4,0.4,0.0,0.2,0.6,0.2
