@@ -4,6 +4,8 @@ from pathlib import Path
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+from shapely import wkt
+from shapely.geometry import mapping
 
 ROOT = Path(__file__).resolve().parent
 COMMUNAL = ROOT / "Script" / "resultats" / "communales"
@@ -48,6 +50,25 @@ def _read_csv(path: str, modified_ns: int) -> pd.DataFrame:
 
 def load_csv(path: Path) -> pd.DataFrame:
     return _read_csv(str(path), path.stat().st_mtime_ns)
+
+
+@st.cache_data(show_spinner="Préparation des limites communales…")
+def communal_geojson(geometries: pd.DataFrame) -> dict:
+    features = []
+    for row in geometries.itertuples(index=False):
+        geometry = wkt.loads(row.geometry_wkt).simplify(0.001, preserve_topology=True)
+        if geometry.is_empty:
+            continue
+        features.append({
+            "type": "Feature",
+            "properties": {
+                "commune_code": str(row.commune_code),
+                "commune_name": row.commune_name,
+                "region_name": row.region_name,
+            },
+            "geometry": mapping(geometry),
+        })
+    return {"type": "FeatureCollection", "features": features}
 
 
 def chart_style(fig, height=380):
@@ -103,6 +124,108 @@ def show_communal_dashboard() -> None:
     c2.metric("Communes observées", f"{selected.commune_code.nunique():,}".replace(",", " "))
     c3.metric("Scrutins", " · ".join(str(year) for year in years))
     c4.metric("Régions couvertes", f"{selected.region_name.nunique():,}".replace(",", " "))
+
+    map_indicators = {
+        "Participation (%)": "turnout_pct",
+        "Concentration des voix (HHI)": "party_concentration",
+        "Couverture des votes (%)": "vote_coverage_pct",
+    }
+    map_indicator = st.selectbox("Indicateur à cartographier", list(map_indicators), key="communal_map_indicator")
+    map_year_data = communes[communes.year.eq(latest_year)].drop_duplicates("commune_code").copy()
+    map_year_data["commune_code"] = map_year_data.commune_code.astype(str)
+    map_geojson = communal_geojson(
+        map_year_data[["commune_code", "commune_name", "region_name", "geometry_wkt"]]
+    )
+    map_left, map_right = st.columns(2, gap="large")
+    with map_left:
+        with st.container(border=True):
+            st.subheader(f"{map_indicator} · {latest_year}")
+            metric_column = map_indicators[map_indicator]
+            metric_data = map_year_data.dropna(subset=[metric_column])
+            fig = px.choropleth_map(
+                metric_data,
+                geojson=map_geojson,
+                locations="commune_code",
+                featureidkey="properties.commune_code",
+                color=metric_column,
+                hover_name="commune_name",
+                hover_data={
+                    "commune_code": False,
+                    "region_name": True,
+                    metric_column: ":.1f" if metric_column != "party_concentration" else ":.2f",
+                },
+                color_continuous_scale=["#f2eee6", "#e5b65b", TEAL],
+                map_style="carto-positron",
+                center={"lat": 31.8, "lon": -6.2},
+                zoom=4.25,
+                opacity=0.78,
+                labels={metric_column: map_indicator},
+            )
+            fig.update_layout(
+                height=520,
+                margin=dict(l=0, r=0, t=0, b=0),
+                font=dict(family="Aptos, Inter, Segoe UI, sans-serif", color=INK),
+                paper_bgcolor="rgba(0,0,0,0)",
+                coloraxis_colorbar=dict(title=map_indicator, thickness=12),
+            )
+            if metric_column != "party_concentration":
+                fig.update_layout(coloraxis_colorbar_ticksuffix=" %")
+            st.plotly_chart(fig, use_container_width=True)
+    with map_right:
+        with st.container(border=True):
+            st.subheader("Variation de participation · 2015–2021")
+            comparison_geo = (
+                communes[communes.year.eq(2015)]
+                .drop_duplicates("commune_code")
+                [["commune_code", "commune_name", "region_name", "geometry_wkt"]]
+                .merge(
+                    evolution[["commune_code", "turnout_pct_2015", "turnout_pct_2021", "variation_points"]],
+                    on="commune_code",
+                    how="inner",
+                )
+                .dropna(subset=["variation_points"])
+            )
+            comparison_geo["commune_code"] = comparison_geo.commune_code.astype(str)
+            comparison_shapes = communal_geojson(
+                comparison_geo[["commune_code", "commune_name", "region_name", "geometry_wkt"]]
+            )
+            extent = max(float(comparison_geo.variation_points.abs().max()), 1.0)
+            fig = px.choropleth_map(
+                comparison_geo,
+                geojson=comparison_shapes,
+                locations="commune_code",
+                featureidkey="properties.commune_code",
+                color="variation_points",
+                hover_name="commune_name",
+                hover_data={
+                    "commune_code": False,
+                    "region_name": True,
+                    "turnout_pct_2015": ":.1f",
+                    "turnout_pct_2021": ":.1f",
+                    "variation_points": ":+.1f",
+                },
+                color_continuous_scale=["#c65c54", "#f2eee6", TEAL],
+                color_continuous_midpoint=0,
+                range_color=[-extent, extent],
+                map_style="carto-positron",
+                center={"lat": 31.8, "lon": -6.2},
+                zoom=4.25,
+                opacity=0.78,
+                labels={
+                    "variation_points": "Variation (points)",
+                    "turnout_pct_2015": "Participation 2015 (%)",
+                    "turnout_pct_2021": "Participation 2021 (%)",
+                },
+            )
+            fig.update_layout(
+                height=520,
+                margin=dict(l=0, r=0, t=0, b=0),
+                font=dict(family="Aptos, Inter, Segoe UI, sans-serif", color=INK),
+                paper_bgcolor="rgba(0,0,0,0)",
+                coloraxis_colorbar=dict(title="Points", thickness=12),
+            )
+            st.plotly_chart(fig, use_container_width=True)
+    st.caption("Chaque contour représente une commune. Sur la carte d’évolution, le rouge indique une baisse et le vert une hausse.")
 
     trend = annual[annual.annee.isin(years)].copy()
     if area != "Toutes les régions":
@@ -318,7 +441,8 @@ def show_legislative_dashboard() -> None:
 
     st.markdown(
         '<div class="source-note">Les taux présentés sont des moyennes non pondérées par les inscrits. '
-        'Les parts de voix portent sur les listes locales. Les résultats agrégés ne mesurent pas les intentions de vote.</div>',
+        'Les parts de voix portent sur les listes locales. Les résultats agrégés ne mesurent pas les intentions de vote. '
+        'Les classeurs législatifs ne fournissent pas de géométries communales; leurs comparaisons sont présentées par région.</div>',
         unsafe_allow_html=True,
     )
 
