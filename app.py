@@ -7,6 +7,7 @@ import plotly.express as px
 import streamlit as st
 from shapely import wkt
 from shapely.geometry import mapping
+from shapely.ops import unary_union
 
 ROOT = Path(__file__).resolve().parent
 COMMUNAL = ROOT / "Script" / "resultats" / "communales"
@@ -53,20 +54,19 @@ def load_csv(path: Path) -> pd.DataFrame:
     return _read_csv(str(path), path.stat().st_mtime_ns)
 
 
-@st.cache_data(show_spinner="Préparation des limites communales…")
-def communal_geojson(geometries: pd.DataFrame) -> dict:
+@st.cache_data(show_spinner="Préparation des limites régionales…")
+def regional_geojson(geometries: pd.DataFrame) -> dict:
     features = []
-    for row in geometries.itertuples(index=False):
-        geometry = wkt.loads(row.geometry_wkt).simplify(0.001, preserve_topology=True)
+    for region, group in geometries.groupby("region_name", sort=True):
+        shapes = [wkt.loads(value) for value in group.geometry_wkt.dropna()]
+        if not shapes:
+            continue
+        geometry = unary_union(shapes).simplify(0.002, preserve_topology=True)
         if geometry.is_empty:
             continue
         features.append({
             "type": "Feature",
-            "properties": {
-                "commune_code": str(row.commune_code),
-                "commune_name": row.commune_name,
-                "region_name": row.region_name,
-            },
+            "properties": {"region_name": region},
             "geometry": mapping(geometry),
         })
     return {"type": "FeatureCollection", "features": features}
@@ -74,7 +74,7 @@ def communal_geojson(geometries: pd.DataFrame) -> dict:
 
 @st.cache_data(show_spinner=False)
 def map_view(geometry_wkts: tuple[str, ...]) -> tuple[dict, float]:
-    """Return a map centre and zoom level fitted to the selected communes."""
+    """Return a map centre and zoom level fitted to the selected regions."""
     bounds = [wkt.loads(geometry).bounds for geometry in geometry_wkts]
     min_x = min(item[0] for item in bounds)
     min_y = min(item[1] for item in bounds)
@@ -109,12 +109,11 @@ def page_header(eyebrow: str, title: str, description: str) -> None:
 def show_communal_dashboard() -> None:
     page_header(
         "Scrutins communaux · 2015 et 2021",
-        "Le vote, commune par commune.",
-        "Explorez la participation, les parts de voix et l’évolution entre les deux scrutins.",
+        "Le vote, région par région.",
+        "Comparez simplement la participation, les indicateurs de voix et leur évolution entre les deux scrutins.",
     )
     communes = load_csv(ROOT / "Data" / "processed" / "kharita_communes_nettoye.csv")
     annual = load_csv(COMMUNAL / "participation_par_annee.csv")
-    regions = load_csv(COMMUNAL / "participation_par_region.csv")
     party_shares = load_csv(COMMUNAL / "parts_voix_partis.csv")
     evolution = load_csv(COMMUNAL / "evolution_communes.csv")
 
@@ -145,14 +144,17 @@ def show_communal_dashboard() -> None:
         "Couverture des votes (%)": "vote_coverage_pct",
     }
     map_indicator = st.selectbox("Indicateur à cartographier", list(map_indicators), key="communal_map_indicator")
-    map_year_data = communes[communes.year.eq(latest_year)].drop_duplicates("commune_code").copy()
+    map_year_data = communes[communes.year.eq(latest_year)].copy()
     if area != "Toutes les régions":
         map_year_data = map_year_data[map_year_data.region_name.eq(area)].copy()
-    map_year_data["commune_code"] = map_year_data.commune_code.astype(str)
-    map_geojson = communal_geojson(
-        map_year_data[["commune_code", "commune_name", "region_name", "geometry_wkt"]]
-    )
-    current_map_center, current_map_zoom = map_view(tuple(map_year_data.geometry_wkt))
+    metric_columns = list(map_indicators.values())
+    map_year_data = map_year_data.groupby("region_name", as_index=False)[metric_columns].mean()
+    map_shapes = communes[communes.year.eq(latest_year)]
+    if area != "Toutes les régions":
+        map_shapes = map_shapes[map_shapes.region_name.eq(area)]
+    region_geometries = map_shapes[["region_name", "geometry_wkt"]].drop_duplicates()
+    map_geojson = regional_geojson(region_geometries)
+    current_map_center, current_map_zoom = map_view(tuple(region_geometries.geometry_wkt))
     map_left, map_right = st.columns(2, gap="large")
     with map_left:
         with st.container(border=True):
@@ -162,13 +164,11 @@ def show_communal_dashboard() -> None:
             fig = px.choropleth_map(
                 metric_data,
                 geojson=map_geojson,
-                locations="commune_code",
-                featureidkey="properties.commune_code",
+                locations="region_name",
+                featureidkey="properties.region_name",
                 color=metric_column,
-                hover_name="commune_name",
+                hover_name="region_name",
                 hover_data={
-                    "commune_code": False,
-                    "region_name": True,
                     metric_column: ":.1f" if metric_column != "party_concentration" else ":.2f",
                 },
                 color_continuous_scale=["#f2eee6", "#e5b65b", TEAL],
@@ -191,10 +191,9 @@ def show_communal_dashboard() -> None:
     with map_right:
         with st.container(border=True):
             st.subheader("Variation de participation · 2015–2021")
-            comparison_geo = (
+            comparison_detail = (
                 communes[communes.year.eq(2015)]
-                .drop_duplicates("commune_code")
-                [["commune_code", "commune_name", "region_name", "geometry_wkt"]]
+                [["commune_code", "region_name", "geometry_wkt"]]
                 .merge(
                     evolution[["commune_code", "turnout_pct_2015", "turnout_pct_2021", "variation_points"]],
                     on="commune_code",
@@ -203,23 +202,27 @@ def show_communal_dashboard() -> None:
                 .dropna(subset=["variation_points"])
             )
             if area != "Toutes les régions":
-                comparison_geo = comparison_geo[comparison_geo.region_name.eq(area)].copy()
-            comparison_geo["commune_code"] = comparison_geo.commune_code.astype(str)
-            comparison_shapes = communal_geojson(
-                comparison_geo[["commune_code", "commune_name", "region_name", "geometry_wkt"]]
+                comparison_detail = comparison_detail[comparison_detail.region_name.eq(area)].copy()
+            comparison_geo = comparison_detail.groupby("region_name", as_index=False).agg(
+                turnout_pct_2015=("turnout_pct_2015", "mean"),
+                turnout_pct_2021=("turnout_pct_2021", "mean"),
+                variation_points=("variation_points", "mean"),
+            )
+            comparison_shapes = regional_geojson(
+                comparison_detail[["region_name", "geometry_wkt"]].drop_duplicates()
             )
             extent = max(float(comparison_geo.variation_points.abs().max()), 1.0)
-            comparison_center, comparison_zoom = map_view(tuple(comparison_geo.geometry_wkt))
+            comparison_center, comparison_zoom = map_view(
+                tuple(comparison_detail.geometry_wkt.dropna())
+            )
             fig = px.choropleth_map(
                 comparison_geo,
                 geojson=comparison_shapes,
-                locations="commune_code",
-                featureidkey="properties.commune_code",
+                locations="region_name",
+                featureidkey="properties.region_name",
                 color="variation_points",
-                hover_name="commune_name",
+                hover_name="region_name",
                 hover_data={
-                    "commune_code": False,
-                    "region_name": True,
                     "turnout_pct_2015": ":.1f",
                     "turnout_pct_2021": ":.1f",
                     "variation_points": ":+.1f",
@@ -247,8 +250,9 @@ def show_communal_dashboard() -> None:
             st.plotly_chart(fig, use_container_width=True)
     map_scope = "l’ensemble du Maroc" if area == "Toutes les régions" else area
     st.caption(
-        f"Cartes centrées sur {map_scope}. Chaque contour représente une commune; "
-        "le rouge indique une baisse de participation et le vert une hausse."
+        f"Cartes centrées sur {map_scope}. Chaque contour représente une région; "
+        "les valeurs sont des moyennes régionales. Le rouge indique une baisse de participation "
+        "et le vert une hausse."
     )
 
     trend = annual[annual.annee.isin(years)].copy()
@@ -276,14 +280,19 @@ def show_communal_dashboard() -> None:
     with right:
         with st.container(border=True):
             st.subheader(f"Participation par région · {latest_year}")
-            regional = regions[regions.annee.eq(latest_year)].sort_values("taux_moyen")
+            regional = (
+                communes[communes.year.eq(latest_year)]
+                .groupby("region_name", as_index=False)
+                .turnout_pct.mean()
+                .sort_values("turnout_pct")
+            )
             fig = px.bar(
                 regional,
-                x="taux_moyen",
+                x="turnout_pct",
                 y="region_name",
                 orientation="h",
-                labels={"taux_moyen": "Participation moyenne (%)", "region_name": "Région"},
-                color="taux_moyen",
+                labels={"turnout_pct": "Participation moyenne (%)", "region_name": "Région"},
+                color="turnout_pct",
                 color_continuous_scale=["#d6e8e3", TEAL],
             )
             fig.update_layout(coloraxis_showscale=False)

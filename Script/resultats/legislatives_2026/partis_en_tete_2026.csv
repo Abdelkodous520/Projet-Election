@@ -1,0 +1,105 @@
+﻿region,circonscription,type_liste,parti,voix,part_voix_pct,sieges_obtenus
+Souss-Massa,Agadir Ida-Ou-Tanane,Locale,PJD,15167.0,24.0,1.0
+Casablanca-Settat,Al Fida-Mers Sultan,Locale,PJD,5987.0,25.5,1.0
+Marrakech-Safi,Al Haouz,Locale,RNI,23658.0,23.1,1.0
+Tanger-Tétouan-Al Hoceïma,Al Hoceïma,Locale,USFP,13216.0,19.1,1.0
+Dakhla-Oued Ed-Dahab,Aousserd,Locale,PI,2637.0,31.8,1.0
+Guelmim-Oued Noun,Assa-Zag,Locale,PAM,7020.0,40.4,1.0
+Béni Mellal-Khénifra,Azilal-Demnate,Locale,PAM,11084.0,26.9,1.0
+Casablanca-Settat,Aïn Chock,Locale,PJD,9559.0,32.4,1.0
+Casablanca-Settat,Aïn Sebaâ-Hay Mohammadi,Locale,UC,11100.0,23.8,1.0
+Casablanca-Settat,Ben M'sick,Locale,UC,8969.0,37.0,1.0
+Casablanca-Settat,Benslimane,Locale,RNI,11887.0,24.3,1.0
+L'Oriental,Berkane,Locale,PAM,17638.0,37.1,1.0
+Casablanca-Settat,Berrechid,Locale,PAM,16737.0,23.8,1.0
+Laâyoune-Sakia El Hamra,Boujdour,Locale,PI,7381.0,37.6,1.0
+Fès-Meknès,Boulemane,Locale,RNI,18687.0,39.5,1.0
+Béni Mellal-Khénifra,Bzou-Ouaouizeght,Locale,PAM,16762.0,32.2,1.0
+Béni Mellal-Khénifra,Béni Mellal,Locale,PI,21384.0,22.8,1.0
+Casablanca-Settat,Casablanca-Anfa,Locale,PJD,7360.0,24.0,1.0
+Tanger-Tétouan-Al Hoceïma,Chefchaouen,Locale,PI,12066.0,16.7,1.0
+Marrakech-Safi,Chichaoua,Locale,PAM,24632.0,28.0,1.0
+Souss-Massa,Chtouka-Aït Baha,Locale,PAM,12006.0,21.0,1.0
+Béni Mellal-Khénifra,Circonscription régionale Béni Mellal-Khénifra,Régionale,PAM,92086.0,22.2,1.0
+Casablanca-Settat,Circonscription régionale Casablanca-Settat,Régionale,PAM,163660.0,19.6,1.0
+Dakhla-Oued Ed-Dahab,Circonscription régionale Dakhla-Oued Ed-Dahab,Régionale,PI,14005.0,37.6,1.0
+Drâa-Tafilalet,Circonscription régionale Drâa-Tafilalet,Régionale,PAM,57393.0,20.2,1.0
+Fès-Meknès,Circonscription régionale Fès-Meknès,Régionale,PAM,110309.0,22.0,1.0
+Guelmim-Oued Noun,Circonscription régionale Guelmim-Oued Noun,Régionale,PAM,37326.0,29.9,1.0
+L'Oriental,Circonscription régionale L'Oriental,Régionale,PAM,85465.0,27.6,1.0
+Laâyoune-Sakia El Hamra,Circonscription régionale Laâyoune-Sakia El Hamra,Régionale,PI,66581.0,43.4,2.0
+Marrakech-Safi,Circonscription régionale Marrakech-Safi,Régionale,PAM,177986.0,26.4,1.0
+Rabat-Salé-Kénitra,Circonscription régionale Rabat-Salé-Kénitra,Régionale,PAM,124736.0,20.0,1.0
+Souss-Massa,Circonscription régionale Souss-Massa,Régionale,PI,98320.0,23.1,1.0
+Tanger-Tétouan-Al Hoceïma,Circonscription régionale Tanger-Tétouan-Al Hoceïma,Régionale,PAM,86557.0,18.8,1.0
+L'Oriental,Driouch,Locale,RNI,8597.0,23.6,1.0
+Fès-Meknès,El Hajeb,Locale,PAM,9121.0,26.5,1.0
+Casablanca-Settat,El Jadida,Locale,PI,38630.0,30.7,1.0
+Marrakech-Safi,El Kelâa des Sraghna,Locale,PI,17076.0,22.3,1.0
+Drâa-Tafilalet,Errachidia,Locale,PJD,13998.0,21.3,1.0
+Laâyoune-Sakia El Hamra,Es-Semara,Locale,PI,7240.0,41.2,1.0
+Marrakech-Safi,Essaouira,Locale,PAM,22464.0,26.7,1.0
+Tanger-Tétouan-Al Hoceïma,Fahs-Anjra,Locale,RNI,4926.0,24.4,1.0
+L'Oriental,Figuig,Locale,PAM,8200.0,25.4,1.0
+Béni Mellal-Khénifra,Fquih Ben Salah,Locale,PAM,13249.0,18.7,1.0
+Fès-Meknès,Fès-Nord,Locale,PJD,9937.0,24.6,1.0
+Fès-Meknès,Fès-Sud,Locale,PJD,12368.0,24.6,1.0
+Rabat-Salé-Kénitra,Gharb,Locale,RNI,19333.0,32.2,1.0
+Guelmim-Oued Noun,Guelmim,Locale,PAM,9930.0,23.8,1.0
+L'Oriental,Guercif,Locale,PAM,8790.0,27.2,1.0
+Casablanca-Settat,Hay Hassani,Locale,PJD,9263.0,28.6,1.0
+Fès-Meknès,Ifrane,Locale,MP,7985.0,25.3,1.0
+Souss-Massa,Inezgane-Aït Melloul,Locale,PJD,15522.0,31.5,1.0
+L'Oriental,Jerada,Locale,RNI,7537.0,32.8,1.0
+Fès-Meknès,Karia Ba Mohamed-Ghafsai,Locale,RNI,19932.0,31.3,1.0
+Béni Mellal-Khénifra,Khouribga,Locale,PAM,18047.0,19.8,1.0
+Rabat-Salé-Kénitra,Khémisset-Oulmès,Locale,PAM,9588.0,18.8,1.0
+Béni Mellal-Khénifra,Khénifra,Locale,PAM,20454.0,30.0,1.0
+Rabat-Salé-Kénitra,Kénitra,Locale,PJD,13874.0,18.5,1.0
+Tanger-Tétouan-Al Hoceïma,Larache,Locale,PAM,14388.0,21.0,1.0
+Laâyoune-Sakia El Hamra,Laâyoune,Locale,PI,51835.0,48.8,1.0
+Tanger-Tétouan-Al Hoceïma,M'diq-Fnideq,Locale,PAM,7515.0,34.8,1.0
+Marrakech-Safi,Marrakech-Guéliz-Ennakhil,Locale,PAM,17197.0,31.9,1.0
+Marrakech-Safi,Marrakech-Médina-Sidi Youssef Ben Ali,Locale,PAM,12775.0,40.1,1.0
+Marrakech-Safi,Marrakech-Ménara,Locale,PAM,16247.0,28.7,1.0
+Fès-Meknès,Meknès,Locale,PJD,17960.0,19.0,1.0
+Drâa-Tafilalet,Midelt,Locale,PUD,16450.0,30.1,1.0
+Casablanca-Settat,Mohammedia,Locale,PI,9109.0,20.3,1.0
+Casablanca-Settat,Moulay Rachid,Locale,PJD,10173.0,32.1,1.0
+Fès-Meknès,Moulay Yacoub,Locale,PAM,11680.0,35.6,1.0
+Casablanca-Settat,Médiouna,Locale,PAM,12185.0,35.7,1.0
+L'Oriental,Nador,Locale,PAM,13456.0,23.2,1.0
+Casablanca-Settat,Nouaceur,Locale,PJD,12348.0,26.2,1.0
+Drâa-Tafilalet,Ouarzazate,Locale,PAM,17987.0,31.3,1.0
+Dakhla-Oued Ed-Dahab,Oued Ed-Dahab,Locale,PI,11124.0,38.6,1.0
+Tanger-Tétouan-Al Hoceïma,Ouezzane,Locale,RNI,19159.0,31.7,1.0
+L'Oriental,Oujda-Angad,Locale,PAM,16453.0,32.2,1.0
+Rabat-Salé-Kénitra,Rabat-Chellah,Locale,PAM,9498.0,28.8,1.0
+Rabat-Salé-Kénitra,Rabat-Océan,Locale,PAM,12228.0,30.2,1.0
+Marrakech-Safi,Rehamna,Locale,PAM,17062.0,37.9,1.0
+Marrakech-Safi,Safi,Locale,PJD,17973.0,21.8,1.0
+Rabat-Salé-Kénitra,Salé-Al Jadida,Locale,PJD,8543.0,22.7,1.0
+Rabat-Salé-Kénitra,Salé-Médina,Locale,PJD,10366.0,25.5,1.0
+Fès-Meknès,Sefrou,Locale,MDS,19618.0,30.8,1.0
+Casablanca-Settat,Settat,Locale,PAM,15043.0,15.0,1.0
+Casablanca-Settat,Sidi Bennour,Locale,PAM,23376.0,23.4,1.0
+Casablanca-Settat,Sidi Bernoussi,Locale,PJD,11820.0,33.1,1.0
+Guelmim-Oued Noun,Sidi Ifni,Locale,RNI,16760.0,38.5,1.0
+Rabat-Salé-Kénitra,Sidi Kacem,Locale,PAM,19638.0,21.7,1.0
+Rabat-Salé-Kénitra,Sidi Slimane,Locale,UC,15787.0,30.1,1.0
+Rabat-Salé-Kénitra,Skhirate-Témara,Locale,PJD,19268.0,28.6,1.0
+Guelmim-Oued Noun,Tan-Tan,Locale,PAM,7303.0,33.3,1.0
+Tanger-Tétouan-Al Hoceïma,Tanger-Assilah,Locale,PJD,25886.0,31.5,1.0
+Fès-Meknès,Taounate-Tissa,Locale,PAM,14665.0,25.9,1.0
+L'Oriental,Taourirt,Locale,MP,8635.0,27.2,1.0
+Laâyoune-Sakia El Hamra,Tarfaya,Locale,RNI,3160.0,29.7,1.0
+Souss-Massa,Taroudant-Nord,Locale,RNI,25003.0,34.1,1.0
+Souss-Massa,Taroudant-Sud,Locale,PI,25433.0,28.1,1.0
+Souss-Massa,Tata,Locale,RNI,9765.0,30.5,1.0
+Fès-Meknès,Taza,Locale,PAM,13250.0,16.2,1.0
+Rabat-Salé-Kénitra,Tiflet-Rommani,Locale,PAM,16576.0,27.4,1.0
+Drâa-Tafilalet,Tinghir,Locale,PPS,12481.0,19.2,1.0
+Souss-Massa,Tiznit,Locale,RNI,14466.0,32.5,1.0
+Tanger-Tétouan-Al Hoceïma,Tétouan,Locale,RNI,12836.0,19.8,1.0
+Marrakech-Safi,Youssoufia,Locale,PAM,8681.0,26.5,1.0
+Drâa-Tafilalet,Zagora,Locale,USFP,15720.0,27.7,1.0
