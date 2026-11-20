@@ -356,7 +356,7 @@ def show_communal_dashboard() -> None:
 
 def show_legislative_dashboard() -> None:
     page_header(
-        "Scrutins législatifs · 2011, 2016 et 2021",
+        "Scrutins législatifs · 2011, 2016, 2021 et 2026",
         "Trois élections, un pays en mouvement.",
         "Parcourez la participation locale, les partis arrivés en tête et les profils des élus.",
     )
@@ -365,6 +365,28 @@ def show_legislative_dashboard() -> None:
     parties = load_csv(LEGISLATIVE / "resultats_partis_national_local.csv")
     wins = load_csv(LEGISLATIVE / "victoires_par_parti.csv")
     profile = load_csv(LEGISLATIVE / "profil_elus_2021_par_region.csv")
+
+    output_2026 = LEGISLATIVE / "legislatives_2026"
+    has_2026 = (output_2026 / "participation_par_annee_2026.csv").exists()
+    if has_2026:
+        annual_2026 = load_csv(output_2026 / "participation_par_annee_2026.csv")
+        regions_2026 = load_csv(output_2026 / "participation_par_region_2026.csv")
+        parties_2026 = load_csv(output_2026 / "resultats_partis_2026.csv")
+        wins_2026 = load_csv(output_2026 / "partis_en_tete_2026.csv")
+        regions_2026 = regions_2026.rename(columns={"participation_moyenne_pct": "taux_moyen"})
+        regions_2026["taux_moyen"] = regions_2026.taux_moyen.div(100)
+        regions_2026["annee"] = 2026
+        parties_2026 = parties_2026.rename(columns={"part_voix_pct": "part_voix"})
+        parties_2026["part_voix"] = parties_2026.part_voix.div(100)
+        parties_2026["annee"] = 2026
+        wins_2026 = wins_2026.rename(columns={"parti": "parti_en_tete"})
+        wins_2026["annee"] = 2026
+        wins_2026["circonscriptions_gagnees"] = 1
+        wins_2026 = wins_2026.groupby(["annee", "parti_en_tete"], as_index=False).circonscriptions_gagnees.sum()
+        annual = pd.concat([annual, annual_2026], ignore_index=True)
+        regions = pd.concat([regions, regions_2026[["annee", "region", "taux_moyen"]]], ignore_index=True)
+        parties = pd.concat([parties, parties_2026[["annee", "parti", "voix", "part_voix"]]], ignore_index=True)
+        wins = pd.concat([wins, wins_2026], ignore_index=True)
 
     available_years = sorted(annual.annee.astype(int).unique())
     with st.sidebar:
@@ -471,6 +493,8 @@ def show_legislative_dashboard() -> None:
         )
         fig.update_xaxes(tickformat=".0%")
         st.plotly_chart(chart_style(fig, 400), use_container_width=True)
+    elif latest_year == 2026:
+        st.info("Le profil détaillé des élus 2026 n’est pas encore fourni par l’export utilisé.")
 
     st.markdown(
         '<div class="source-note">Les taux présentés sont des moyennes non pondérées par les inscrits. '

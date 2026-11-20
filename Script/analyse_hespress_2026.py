@@ -22,8 +22,19 @@ def main() -> None:
     constituencies = pd.read_csv(constituencies_path, encoding="utf-8-sig")
     lists = pd.read_csv(lists_path, encoding="utf-8-sig")
     OUTPUT.mkdir(parents=True, exist_ok=True)
+    local = constituencies[constituencies.type_liste.astype(str).str.casefold().eq("locale")].copy()
 
-    by_region = constituencies.groupby("region", as_index=False).agg(
+    annual = pd.DataFrame([{
+        "annee": 2026,
+        "taux_moyen": local.participation_pct.mean(),
+        "taux_median": local.participation_pct.median(),
+        "minimum": local.participation_pct.min(),
+        "maximum": local.participation_pct.max(),
+        "n_circonscriptions": local.circonscription.nunique(),
+    }])
+    annual.to_csv(OUTPUT / "participation_par_annee_2026.csv", index=False, encoding="utf-8-sig")
+
+    by_region = local.groupby("region", as_index=False).agg(
         participation_moyenne_pct=("participation_pct", "mean"),
         circonscriptions=("circonscription", "nunique"),
         sieges=("sieges_total", "sum"),
@@ -50,6 +61,7 @@ def main() -> None:
         "Les résultats sont descriptifs et dépendent de l’état publié par la source à la date d’extraction indiquée dans `Data/hespress_2026/metadata.json`.",
         "", "## Fichiers produits", "",
         "- `participation_par_region_2026.csv` : participation moyenne et sièges par région.",
+        "- `participation_par_annee_2026.csv` : participation globale sur les circonscriptions locales.",
         "- `resultats_partis_2026.csv` : voix et sièges agrégés par parti.",
         "- `partis_en_tete_2026.csv` : parti ayant obtenu le plus de voix dans chaque circonscription.",
     ]

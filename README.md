@@ -40,7 +40,7 @@ Script/resultats/communales/   Résultats communaux exportés
 Le tableau de bord présente deux analyses distinctes :
 
 - **Communales (2015 et 2021)** : cartes interactives de la participation et de son évolution par commune, parts de voix et téléchargement du tableau comparatif.
-- **Législatives (2011, 2016 et 2021)** : participation régionale et locale, parts de voix des listes locales, partis arrivés en tête et profil des élus en 2021.
+- **Législatives (2011, 2016, 2021 et 2026)** : participation régionale et locale, parts de voix, partis arrivés en tête et profil des élus lorsque les données sont disponibles.
 
 Les graphiques et indicateurs sont descriptifs. Les moyennes de participation ne sont pas pondérées par les inscrits. Les limites des communes proviennent des géométries incluses dans les données; le fond cartographique nécessite une connexion internet. Les classeurs législatifs ne fournissent pas de géométries adaptées à ces scrutins, leurs résultats restent donc comparés par région.
 

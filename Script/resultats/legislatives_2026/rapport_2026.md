@@ -8,5 +8,6 @@ Les résultats sont descriptifs et dépendent de l’état publié par la source
 ## Fichiers produits
 
 - `participation_par_region_2026.csv` : participation moyenne et sièges par région.
+- `participation_par_annee_2026.csv` : participation globale sur les circonscriptions locales.
 - `resultats_partis_2026.csv` : voix et sièges agrégés par parti.
 - `partis_en_tete_2026.csv` : parti ayant obtenu le plus de voix dans chaque circonscription.
