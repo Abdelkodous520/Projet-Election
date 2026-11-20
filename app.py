@@ -373,6 +373,10 @@ def show_legislative_dashboard() -> None:
         regions_2026 = load_csv(output_2026 / "participation_par_region_2026.csv")
         parties_2026 = load_csv(output_2026 / "resultats_partis_2026.csv")
         wins_2026 = load_csv(output_2026 / "partis_en_tete_2026.csv")
+        # Les exports Hespress expriment les taux en points (41,7 = 41,7 %),
+        # alors que les historiques du projet utilisent des fractions (0,417).
+        for column in ["taux_moyen", "taux_median", "minimum", "maximum"]:
+            annual_2026[column] = annual_2026[column].div(100)
         regions_2026 = regions_2026.rename(columns={"participation_moyenne_pct": "taux_moyen"})
         regions_2026["taux_moyen"] = regions_2026.taux_moyen.div(100)
         regions_2026["annee"] = 2026
