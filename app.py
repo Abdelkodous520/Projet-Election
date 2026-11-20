@@ -1,6 +1,7 @@
 """Interactive dashboard for Moroccan election results."""
 from pathlib import Path
 import math
+import unicodedata
 
 import pandas as pd
 import plotly.express as px
@@ -15,6 +16,29 @@ LEGISLATIVE = ROOT / "Script" / "resultats"
 INK = "#1F2933"
 TEAL = "#147D78"
 GOLD = "#D89B3C"
+
+REGION_CENTERS = {
+    "tanger": (35.1, -5.8),
+    "oriental": (34.7, -2.3),
+    "fes": (33.7, -4.9),
+    "meknes": (33.9, -5.5),
+    "taza": (34.2, -4.0),
+    "rabat": (34.0, -6.8),
+    "beni mellal": (32.3, -6.3),
+    "tadla": (32.3, -6.5),
+    "casablanca": (33.4, -7.5),
+    "grand casablanca": (33.4, -7.5),
+    "chaouia": (32.9, -7.5),
+    "doukkala": (32.3, -8.3),
+    "gharb": (34.3, -6.3),
+    "marrakech": (31.6, -8.0),
+    "tensift": (31.6, -8.0),
+    "draa": (31.4, -5.5),
+    "souss": (30.3, -8.5),
+    "guelmim": (28.9, -10.0),
+    "laayoune": (27.1, -13.2),
+    "dakhla": (23.7, -15.9),
+}
 
 st.set_page_config(
     page_title="Élections marocaines | Tableau de bord",
@@ -104,6 +128,14 @@ def page_header(eyebrow: str, title: str, description: str) -> None:
     st.markdown(f'<div class="eyebrow">{eyebrow}</div>', unsafe_allow_html=True)
     st.title(title)
     st.markdown(f'<p class="subtle">{description}</p>', unsafe_allow_html=True)
+
+
+def region_center(region: str) -> tuple[float, float]:
+    key = unicodedata.normalize("NFKD", str(region)).encode("ascii", "ignore").decode().lower()
+    for label, coordinates in REGION_CENTERS.items():
+        if label in key:
+            return coordinates
+    return (31.8, -6.2)
 
 
 def show_communal_dashboard() -> None:
@@ -357,13 +389,15 @@ def show_communal_dashboard() -> None:
 def show_legislative_dashboard() -> None:
     page_header(
         "Scrutins législatifs · 2011, 2016, 2021 et 2026",
-        "Trois élections, un pays en mouvement.",
+        "Quatre scrutins, un pays en mouvement.",
         "Parcourez la participation locale, les partis arrivés en tête et les profils des élus.",
     )
     annual = load_csv(LEGISLATIVE / "participation_par_annee.csv")
     regions = load_csv(LEGISLATIVE / "participation_par_region.csv")
     parties = load_csv(LEGISLATIVE / "resultats_partis_national_local.csv")
     wins = load_csv(LEGISLATIVE / "victoires_par_parti.csv")
+    winner_detail = load_csv(LEGISLATIVE / "parti_en_tete_circonscription.csv")
+    winner_detail = winner_detail.rename(columns={"voix_gagnant": "voix"})
     profile = load_csv(LEGISLATIVE / "profil_elus_2021_par_region.csv")
 
     output_2026 = LEGISLATIVE / "legislatives_2026"
@@ -384,9 +418,16 @@ def show_legislative_dashboard() -> None:
         parties_2026["part_voix"] = parties_2026.part_voix.div(100)
         parties_2026["annee"] = 2026
         wins_2026 = wins_2026.rename(columns={"parti": "parti_en_tete"})
+        winner_detail_2026 = wins_2026.rename(columns={"part_voix_pct": "part_voix_gagnant", "voix": "voix"})
         wins_2026["annee"] = 2026
         wins_2026["circonscriptions_gagnees"] = 1
         wins_2026 = wins_2026.groupby(["annee", "parti_en_tete"], as_index=False).circonscriptions_gagnees.sum()
+        winner_detail_2026["annee"] = 2026
+        winner_detail_2026["part_voix_gagnant"] = winner_detail_2026.part_voix_gagnant.div(100)
+        winner_detail = pd.concat(
+            [winner_detail, winner_detail_2026[["annee", "region", "circonscription", "parti_en_tete", "voix", "part_voix_gagnant"]]],
+            ignore_index=True,
+        )
         annual = pd.concat([annual, annual_2026], ignore_index=True)
         regions = pd.concat([regions, regions_2026[["annee", "region", "taux_moyen"]]], ignore_index=True)
         parties = pd.concat([parties, parties_2026[["annee", "parti", "voix", "part_voix"]]], ignore_index=True)
@@ -469,19 +510,55 @@ def show_legislative_dashboard() -> None:
             st.plotly_chart(chart_style(fig, 350), use_container_width=True)
     with right:
         with st.container(border=True):
-            st.subheader("Nombre de circonscriptions gagnées")
-            wins_selected = wins[wins.annee.isin(years)].copy()
-            wins_selected["annee"] = wins_selected.annee.astype(str)
-            fig = px.bar(
-                wins_selected,
-                x="annee",
-                y="circonscriptions_gagnees",
-                color="parti_en_tete",
-                barmode="stack",
-                labels={"annee": "Scrutin", "circonscriptions_gagnees": "Circonscriptions", "parti_en_tete": "Parti"},
-                color_discrete_sequence=[TEAL, GOLD, "#657A9A", "#CC7463", "#8A7CB8"],
-            )
-            st.plotly_chart(chart_style(fig, 350), use_container_width=True)
+            st.subheader(f"Parti dominant par région · {latest_year}")
+            detail = winner_detail[winner_detail.annee.eq(latest_year)].copy()
+            if detail.empty:
+                st.info("Aucun détail de circonscription disponible pour ce scrutin.")
+            else:
+                region_wins = (
+                    detail.groupby(["region", "parti_en_tete"], as_index=False)
+                    .size()
+                    .rename(columns={"size": "circonscriptions_gagnees"})
+                    .sort_values(["region", "circonscriptions_gagnees"], ascending=[True, False])
+                    .drop_duplicates("region")
+                )
+                coordinates = region_wins.region.map(region_center)
+                region_wins["lat"] = coordinates.map(lambda value: value[0])
+                region_wins["lon"] = coordinates.map(lambda value: value[1])
+                fig = px.scatter_geo(
+                    region_wins,
+                    lat="lat",
+                    lon="lon",
+                    color="parti_en_tete",
+                    size="circonscriptions_gagnees",
+                    size_max=26,
+                    hover_name="region",
+                    hover_data={"parti_en_tete": True, "circonscriptions_gagnees": True, "lat": False, "lon": False},
+                    labels={
+                        "parti_en_tete": "Parti dominant",
+                        "circonscriptions_gagnees": "Circonscriptions gagnées",
+                    },
+                    color_discrete_sequence=[TEAL, GOLD, "#657A9A", "#CC7463", "#8A7CB8", "#5D9C8E"],
+                )
+                fig.update_geos(
+                    projection_type="mercator",
+                    lataxis_range=[21, 36],
+                    lonaxis_range=[-18, -0.5],
+                    showland=True,
+                    landcolor="#eef2ef",
+                    showcountries=True,
+                    countrycolor="#c8d2ce",
+                    showocean=True,
+                    oceancolor="#dfe8ea",
+                )
+                fig.update_layout(
+                    height=350,
+                    margin=dict(l=0, r=0, t=0, b=0),
+                    font=dict(family="Aptos, Inter, Segoe UI, sans-serif", color=INK),
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    legend_title_text="Parti dominant",
+                )
+                st.plotly_chart(fig, use_container_width=True)
 
     if latest_year == 2021:
         st.subheader("Part des élues par région · 2021")
@@ -499,6 +576,38 @@ def show_legislative_dashboard() -> None:
         st.plotly_chart(chart_style(fig, 400), use_container_width=True)
     elif latest_year == 2026:
         st.info("Le profil détaillé des élus 2026 n’est pas encore fourni par l’export utilisé.")
+
+    if latest_year in winner_detail.annee.unique():
+        st.subheader(f"Hiérarchie région → circonscription · {latest_year}")
+        detail = winner_detail[winner_detail.annee.eq(latest_year)].copy()
+        detail["niveau_local"] = detail.circonscription.str.replace(
+            "^Circonscription régionale ", "Régionale · ", regex=True
+        )
+        fig = px.treemap(
+            detail,
+            path=["region", "niveau_local"],
+            values="voix",
+            color="parti_en_tete",
+            hover_data={"parti_en_tete": True, "voix": ":,.0f", "part_voix_gagnant": ":.1%"},
+            labels={
+                "niveau_local": "Circonscription",
+                "parti_en_tete": "Parti en tête",
+                "voix": "Voix du parti en tête",
+                "part_voix_gagnant": "Part des voix",
+            },
+            color_discrete_sequence=[TEAL, GOLD, "#657A9A", "#CC7463", "#8A7CB8", "#5D9C8E"],
+        )
+        fig.update_layout(
+            height=460,
+            margin=dict(l=0, r=0, t=10, b=0),
+            font=dict(family="Aptos, Inter, Segoe UI, sans-serif", color=INK),
+            paper_bgcolor="rgba(0,0,0,0)",
+        )
+        st.plotly_chart(fig, use_container_width=True)
+        st.caption(
+            "Cliquez sur une région pour descendre dans ses circonscriptions. "
+            "Les données Hespress ne fournissent pas une colonne Ville séparée; le niveau local affiché est donc la circonscription."
+        )
 
     st.markdown(
         '<div class="source-note">Les taux présentés sont des moyennes non pondérées par les inscrits. '
