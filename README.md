@@ -28,6 +28,8 @@ app.py                         Tableau de bord Streamlit
 Data/                          Données sources et données communales nettoyées
 Script/kharita_pipeline.py     Nettoyage et fonctions partagées
 Script/run_pipeline.py        Point d’entrée pour régénérer les analyses
+Script/collect_hespress_2026.py Collecte des résultats législatifs 2026 publiés par Hespress
+Script/analyse_hespress_2026.py Analyse descriptive des exports 2026
 Script/notebooks/             Parcours d’analyse communale en six étapes
 Script/resultats/              Rapports et résultats législatifs
 Script/resultats/communales/   Résultats communaux exportés
@@ -55,10 +57,22 @@ Exécuter `python -m jupyter notebook` pour ouvrir Jupyter, puis parcourir les n
 
 Les classeurs législatifs complémentaires sont analysés par `Script/analyse_complete.py`. Le rapport correspondant est `Script/resultats/rapport_analyse.md`.
 
+### Résultats législatifs 2026
+
+Le collecteur crée deux CSV distincts : une ligne par circonscription et une ligne par liste de parti. Les résultats 2026 ne sont pas fusionnés avec les fichiers historiques, car la source, le découpage et l’état de publication peuvent différer.
+
+```bash
+python Script/collect_hespress_2026.py
+python Script/analyse_hespress_2026.py
+```
+
+Les fichiers seront enregistrés dans `Data/hespress_2026/`, avec l’URL source et la date d’extraction dans `metadata.json`. Le portail peut refuser les requêtes automatisées; dans ce cas le collecteur s’arrête sans générer de résultat partiel.
+
 ## Données et provenance
 
 - Le jeu principal, fourni dans `Data/resultats-elections-communales-maroc-2015-2021.csv`, provient de [Kharita — résultats des élections communales marocaines 2015–2021](https://lekharita.com/en/donnees/resultats-elections-communales-maroc-2015-2021). La source annonce une licence **CC BY 4.0**; l’attribution est conservée ici.
 - Les classeurs législatifs 2011, 2016 et 2021 sont inclus dans `Data/` et analysés séparément des élections communales.
+- Les résultats législatifs 2026 sont collectés depuis [Hespress Élections — circonscriptions 2026](https://elections.hespress.com/fr/elections/2026/circonscriptions), qui indique le ministère de l’Intérieur comme source. La collecte conserve l’URL et l’horodatage associés à chaque export.
 - `Data/API_SG.GEN.PARL.ZS_DS2_en_csv_v2_4495.zip` est une source complémentaire World Bank; elle ne fait pas partie du parcours principal.
 
 Les sources brutes ne sont pas modifiées. Le lecteur communal corrige le mélange d’encodages présent dans le CSV source afin de préserver à la fois les caractères accentués et les noms en arabe.
