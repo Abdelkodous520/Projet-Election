@@ -1,5 +1,6 @@
 """Interactive dashboard for Moroccan election results."""
 from pathlib import Path
+import math
 
 import pandas as pd
 import plotly.express as px
@@ -71,6 +72,19 @@ def communal_geojson(geometries: pd.DataFrame) -> dict:
     return {"type": "FeatureCollection", "features": features}
 
 
+@st.cache_data(show_spinner=False)
+def map_view(geometry_wkts: tuple[str, ...]) -> tuple[dict, float]:
+    """Return a map centre and zoom level fitted to the selected communes."""
+    bounds = [wkt.loads(geometry).bounds for geometry in geometry_wkts]
+    min_x = min(item[0] for item in bounds)
+    min_y = min(item[1] for item in bounds)
+    max_x = max(item[2] for item in bounds)
+    max_y = max(item[3] for item in bounds)
+    span = max(max_x - min_x, (max_y - min_y) * 1.35, 0.05)
+    zoom = max(4.25, min(9.5, math.log2(360 / span) - 0.55))
+    return {"lat": (min_y + max_y) / 2, "lon": (min_x + max_x) / 2}, zoom
+
+
 def chart_style(fig, height=380):
     fig.update_layout(
         template="plotly_white",
@@ -132,10 +146,13 @@ def show_communal_dashboard() -> None:
     }
     map_indicator = st.selectbox("Indicateur à cartographier", list(map_indicators), key="communal_map_indicator")
     map_year_data = communes[communes.year.eq(latest_year)].drop_duplicates("commune_code").copy()
+    if area != "Toutes les régions":
+        map_year_data = map_year_data[map_year_data.region_name.eq(area)].copy()
     map_year_data["commune_code"] = map_year_data.commune_code.astype(str)
     map_geojson = communal_geojson(
         map_year_data[["commune_code", "commune_name", "region_name", "geometry_wkt"]]
     )
+    current_map_center, current_map_zoom = map_view(tuple(map_year_data.geometry_wkt))
     map_left, map_right = st.columns(2, gap="large")
     with map_left:
         with st.container(border=True):
@@ -156,8 +173,8 @@ def show_communal_dashboard() -> None:
                 },
                 color_continuous_scale=["#f2eee6", "#e5b65b", TEAL],
                 map_style="carto-positron",
-                center={"lat": 31.8, "lon": -6.2},
-                zoom=4.25,
+                center=current_map_center,
+                zoom=current_map_zoom,
                 opacity=0.78,
                 labels={metric_column: map_indicator},
             )
@@ -185,11 +202,14 @@ def show_communal_dashboard() -> None:
                 )
                 .dropna(subset=["variation_points"])
             )
+            if area != "Toutes les régions":
+                comparison_geo = comparison_geo[comparison_geo.region_name.eq(area)].copy()
             comparison_geo["commune_code"] = comparison_geo.commune_code.astype(str)
             comparison_shapes = communal_geojson(
                 comparison_geo[["commune_code", "commune_name", "region_name", "geometry_wkt"]]
             )
             extent = max(float(comparison_geo.variation_points.abs().max()), 1.0)
+            comparison_center, comparison_zoom = map_view(tuple(comparison_geo.geometry_wkt))
             fig = px.choropleth_map(
                 comparison_geo,
                 geojson=comparison_shapes,
@@ -208,8 +228,8 @@ def show_communal_dashboard() -> None:
                 color_continuous_midpoint=0,
                 range_color=[-extent, extent],
                 map_style="carto-positron",
-                center={"lat": 31.8, "lon": -6.2},
-                zoom=4.25,
+                center=comparison_center,
+                zoom=comparison_zoom,
                 opacity=0.78,
                 labels={
                     "variation_points": "Variation (points)",
@@ -225,7 +245,11 @@ def show_communal_dashboard() -> None:
                 coloraxis_colorbar=dict(title="Points", thickness=12),
             )
             st.plotly_chart(fig, use_container_width=True)
-    st.caption("Chaque contour représente une commune. Sur la carte d’évolution, le rouge indique une baisse et le vert une hausse.")
+    map_scope = "l’ensemble du Maroc" if area == "Toutes les régions" else area
+    st.caption(
+        f"Cartes centrées sur {map_scope}. Chaque contour représente une commune; "
+        "le rouge indique une baisse de participation et le vert une hausse."
+    )
 
     trend = annual[annual.annee.isin(years)].copy()
     if area != "Toutes les régions":
