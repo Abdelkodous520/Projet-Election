@@ -1,0 +1,14 @@
+# À placer dans  Projet-Election/.streamlit/config.toml
+[theme]
+base = "light"
+primaryColor = "#256abf"
+backgroundColor = "#f9f9f7"
+secondaryBackgroundColor = "#fcfcfb"
+textColor = "#0b0b0b"
+font = "sans serif"
+
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false

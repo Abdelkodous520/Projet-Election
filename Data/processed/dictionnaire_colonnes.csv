@@ -1,0 +1,72 @@
+﻿colonne,type,description,non_nuls,pct_manquant,valeurs_uniques,annees_disponibles
+tie,bool,Égalité entre les premiers (True/False),3006,0.0,2,"2015, 2021"
+year,int64,Année de l'élection,3006,0.0,2,"2015, 2021"
+votes_mp,int64,Voix obtenues par le parti MP,3006,0.0,954,"2015, 2021"
+votes_pa,int64,Voix obtenues par le parti PA,3006,0.0,44,"2015, 2021"
+votes_pe,int64,Voix obtenues par le parti PE,3006,0.0,87,"2015, 2021"
+votes_pi,int64,Voix obtenues par le parti PI,3006,0.0,1426,"2015, 2021"
+votes_uc,int64,Voix obtenues par le parti UC,3006,0.0,706,"2015, 2021"
+votes_afg,float64,Voix obtenues par le parti AFG,1503,50.0,168,2021
+votes_agd,float64,Voix obtenues par le parti AGD,1503,50.0,237,2015
+votes_ahd,int64,Voix obtenues par le parti AHD,3006,0.0,100,"2015, 2021"
+votes_ffd,int64,Voix obtenues par le parti FFD,3006,0.0,277,"2015, 2021"
+votes_mds,int64,Voix obtenues par le parti MDS,3006,0.0,292,"2015, 2021"
+votes_neo,int64,Voix obtenues par le parti NEO,3006,0.0,140,"2015, 2021"
+votes_pam,int64,Voix obtenues par le parti PAM,3006,0.0,1541,"2015, 2021"
+votes_pan,int64,Voix obtenues par le parti PAN,3006,0.0,54,"2015, 2021"
+votes_pcs,int64,Voix obtenues par le parti PCS,3006,0.0,99,"2015, 2021"
+votes_pdi,int64,Voix obtenues par le parti PDI,3006,0.0,61,"2015, 2021"
+votes_pdn,int64,Voix obtenues par le parti PDN,3006,0.0,46,"2015, 2021"
+votes_pe2,float64,Voix obtenues par le parti PE2,1503,50.0,82,2021
+votes_pgv,float64,Voix obtenues par le parti PGV,1503,50.0,30,2015
+votes_pjd,int64,Voix obtenues par le parti PJD,3006,0.0,1020,"2015, 2021"
+votes_pml,float64,Voix obtenues par le parti PML,1503,50.0,25,2015
+votes_pps,int64,Voix obtenues par le parti PPS,3006,0.0,802,"2015, 2021"
+votes_prd,int64,Voix obtenues par le parti PRD,3006,0.0,110,"2015, 2021"
+votes_pre,float64,Voix obtenues par le parti PRE,1503,50.0,49,2015
+votes_prv,int64,Voix obtenues par le parti PRV,3006,0.0,112,"2015, 2021"
+votes_psd,int64,Voix obtenues par le parti PSD,3006,0.0,42,"2015, 2021"
+votes_psu,float64,Voix obtenues par le parti PSU,1503,50.0,136,2021
+votes_pud,int64,Voix obtenues par le parti PUD,3006,0.0,116,"2015, 2021"
+votes_pvm,float64,Voix obtenues par le parti PVM,1503,50.0,69,2021
+votes_rni,int64,Voix obtenues par le parti RNI,3006,0.0,1565,"2015, 2021"
+votes_sap,int64,Voix obtenues par le parti SAP,3006,0.0,65,"2015, 2021"
+votes_umd,int64,Voix obtenues par le parti UMD,3006,0.0,86,"2015, 2021"
+commune_ar,str,Nom de la commune en arabe,3004,0.1,1486,"2015, 2021"
+lead_party,str,Parti arrivé en tête,3006,0.0,24,"2015, 2021"
+lead_votes,int64,Nombre de voix du parti en tête,3006,0.0,1980,"2015, 2021"
+votes_pedd,int64,Voix obtenues par le parti PEDD,3006,0.0,144,"2015, 2021"
+votes_pljs,int64,Voix obtenues par le parti PLJS,3006,0.0,59,"2015, 2021"
+votes_pml1,float64,Voix obtenues par le parti PML1,1503,50.0,81,2021
+votes_sap2,int64,Voix obtenues par le parti SAP2,3006,0.0,10,"2015, 2021"
+votes_sap3,float64,Voix obtenues par le parti SAP3,1503,50.0,4,2021
+votes_usfp,int64,Voix obtenues par le parti USFP,3006,0.0,971,"2015, 2021"
+region_code,int64,Code de la région,3006,0.0,12,"2015, 2021"
+region_name,str,Nom de la région,3006,0.0,12,"2015, 2021"
+seats_total,float64,Nombre total de sièges du conseil,2994,0.4,27,"2015, 2021"
+turnout_pct,float64,Taux de participation (%),2994,0.4,1989,"2015, 2021"
+votes_total,int64,Total des votes exprimés,3006,0.0,2445,"2015, 2021"
+commune_code,str,Identifiant unique de la commune,3006,0.0,1503,"2015, 2021"
+commune_name,str,Nom de la commune,3006,0.0,1493,"2015, 2021"
+commune_type,str,Type de commune,3006,0.0,4,"2015, 2021"
+lead_parties,str,Parti(s) en tête (plusieurs en cas d'égalité),3006,0.0,25,"2015, 2021"
+election_date,str,Date du scrutin,3006,0.0,2,"2015, 2021"
+province_code,float64,Code de la province,3006,0.0,75,"2015, 2021"
+province_name,str,Nom de la province,3006,0.0,75,"2015, 2021"
+lead_share_pct,float64,Part des voix du parti en tête (%),3006,0.0,2210,"2015, 2021"
+aggregation_type,str,Niveau d'agrégation des données (commune simple ou agrégée),3006,0.0,2,"2015, 2021"
+women_elected_pct,float64,Part de femmes élues (%) (2021 uniquement),1497,50.2,29,2021
+source_commune_ids,str,Identifiants des communes sources agrégées,3006,0.0,1503,"2015, 2021"
+elected_age_ge55_pct,float64,Part d'élus de 55 ans ou plus (%),1497,50.2,83,2021
+elected_age_le34_pct,float64,Part d'élus de 34 ans ou moins (%),1497,50.2,75,2021
+elected_age_35_44_pct,float64,Part d'élus de 35 à 44 ans (%),1497,50.2,83,2021
+elected_age_45_54_pct,float64,Part d'élus de 45 à 54 ans (%),1497,50.2,82,2021
+elected_higher_edu_pct,float64,Part d'élus avec enseignement supérieur (%),1497,50.2,103,2021
+geometry_wkt,str,Géométrie de la commune au format WKT,3006,0.0,1503,"2015, 2021"
+vote_fields_reported,int64,Nombre de champs de votes renseignés,3006,0.0,2,"2015, 2021"
+vote_fields_available,int64,Nombre de champs de votes disponibles,3006,0.0,2,"2015, 2021"
+vote_coverage_pct,float64,Couverture des champs de votes (%),3006,0.0,1,"2015, 2021"
+observed_party_votes,float64,Somme des voix des partis observés,3006,0.0,2445,"2015, 2021"
+party_concentration,float64,"Concentration des votes (indice de Herfindahl, 0 à 1)",3006,0.0,3004,"2015, 2021"
+winning_margin,float64,Écart entre le 1er et le 2e (en fraction des voix),3006,0.0,2999,"2015, 2021"
+number_of_parties,float64,Nombre de partis ayant obtenu des voix,3006,0.0,28,"2015, 2021"
