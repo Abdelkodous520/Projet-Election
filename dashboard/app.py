@@ -41,7 +41,7 @@ except ImportError:  # la carte sera désactivée proprement
 # ----------------------------------------------------------------------------
 # 1. Design tokens
 # ----------------------------------------------------------------------------
-SURFACE = "#fcfcfb"
+SURFACE = "#ffffff"
 PAGE = "#f9f9f7"
 INK = "#0b0b0b"
 INK2 = "#52514e"
@@ -94,7 +94,7 @@ def year_colors(years: list[int]) -> dict[int, str]:
     if len(years) == 1:
         return {years[0]: "#1c5cab"}
     if len(years) == 2:
-        return {years[0]: "#a8a69d", years[1]: "#1c5cab"}
+        return {years[0]: "#8fb4e3", years[1]: "#184f95"}
     ramp = ["#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"]
     idx = np.linspace(0, len(ramp) - 1, len(years)).round().astype(int)
     return {y: ramp[i] for y, i in zip(years, idx)}
@@ -121,29 +121,55 @@ st.set_page_config(
 st.markdown(
     """
 <style>
-html, body, [class*="css"], .stApp { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
-.stApp { background: #f9f9f7; color: #0b0b0b; }
-#MainMenu, footer { visibility: hidden; }
-.block-container { padding-top: 2.2rem; padding-bottom: 3rem; max-width: 1400px; }
-[data-testid="stSidebar"] { background: #fcfcfb; border-right: 1px solid rgba(11,11,11,0.08); }
-h1, h2, h3 { letter-spacing: -0.01em; color: #0b0b0b; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+html, body, [class*="css"], .stApp, button, input, select, textarea {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+.stApp { background: linear-gradient(180deg, #e9eef6 0, #f4f6fa 340px, #f4f6fa 100%); color: #0b0b0b; }
+header[data-testid="stHeader"] { background: transparent; }
+.stDeployButton, .stAppDeployButton, [data-testid="stToolbar"], #MainMenu, footer { display: none !important; }
+.block-container { padding-top: 1.3rem; padding-bottom: 3rem; max-width: 1400px; }
+[data-testid="stSidebar"] { background: #ffffff; border-right: 1px solid #e6e9ef; }
+[data-testid="stSidebar"] .block-container { padding-top: 1.2rem; }
 
-.hero-title { font-size: 1.9rem; font-weight: 650; line-height: 1.15; margin: 0 0 .25rem 0; color:#0b0b0b; }
-.hero-sub   { font-size: 1rem; color:#52514e; margin: 0 0 1.2rem 0; }
+.brand { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.brand .logo { width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#0d366b,#256abf);
+  display:flex; align-items:center; justify-content:center; font-size:18px; }
+.brand .name { font-weight:700; font-size:.98rem; line-height:1.1; color:#0b0b0b; }
+.brand .tag  { font-size:.72rem; color:#898781; }
 
-.kpi { background:#fcfcfb; border:1px solid rgba(11,11,11,0.10); border-radius:12px; padding:14px 16px 12px 16px; height:100%; }
-.kpi .lab { font-size:.78rem; color:#52514e; margin-bottom:6px; }
-.kpi .val { font-size:1.75rem; font-weight:650; line-height:1.1; color:#0b0b0b; }
-.kpi .dlt { font-size:.78rem; margin-top:6px; color:#52514e; }
-.kpi .sub { font-size:.74rem; margin-top:4px; color:#898781; }
+.hero { background: linear-gradient(120deg, #0d366b 0%, #184f95 55%, #256abf 100%); border-radius:16px;
+  padding:22px 28px 20px 28px; color:#fff; margin-bottom:18px; box-shadow:0 8px 24px rgba(13,54,107,.20); }
+.hero .eyebrow { font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; opacity:.72; font-weight:600; }
+.hero .t { font-size:1.9rem; font-weight:700; line-height:1.15; margin:.2rem 0 .1rem 0; letter-spacing:-0.02em; }
+.hero .meta { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+.chip { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.24); padding:3px 12px;
+  border-radius:999px; font-size:.78rem; font-weight:500; }
+.hero-title { font-size:1.6rem; font-weight:700; color:#0b0b0b; }
 
-.chart-title { font-size:1rem; font-weight:620; color:#0b0b0b; margin:0 0 2px 0; }
-.chart-sub   { font-size:.82rem; color:#52514e; margin:0 0 6px 0; }
+.kpi { background:#fff; border:1px solid #e6e9ef; border-top:3px solid #256abf; border-radius:12px;
+  padding:14px 16px 12px 16px; min-height:132px; display:flex; flex-direction:column; justify-content:flex-start;
+  box-shadow:0 1px 3px rgba(16,24,40,.05); }
+.kpi .lab { font-size:.76rem; color:#52514e; font-weight:500; margin-bottom:8px; min-height:2.1em; }
+.kpi .val { font-size:1.65rem; font-weight:700; line-height:1.1; color:#0b0b0b; white-space:nowrap; letter-spacing:-0.02em; }
+.kpi .val small { font-size:.9rem; font-weight:600; color:#52514e; margin-left:4px; letter-spacing:0; }
+.kpi .dlt { font-size:.78rem; margin-top:auto; padding-top:8px; font-weight:500; color:#52514e; }
+.kpi .sub { font-size:.74rem; margin-top:auto; padding-top:8px; color:#898781; }
+
+.chart-title { font-size:1rem; font-weight:650; color:#0b0b0b; margin:0 0 2px 0; letter-spacing:-0.01em; }
+.chart-sub   { font-size:.82rem; color:#52514e; margin:0 0 8px 0; }
 .chart-note  { font-size:.76rem; color:#898781; margin-top:2px; }
 
-[data-testid="stVerticalBlockBorderWrapper"] { background:#fcfcfb; border-radius:12px; }
-div[role="radiogroup"] label { font-weight:550; }
+[data-testid="stVerticalBlockBorderWrapper"] { background:#fff; border-radius:14px; border-color:#e6e9ef;
+  box-shadow:0 1px 3px rgba(16,24,40,.05); }
+[data-testid="stSegmentedControl"] button, div[role="radiogroup"] label { font-weight:600; }
+[data-testid="stSegmentedControl"] { margin-bottom:6px; }
 .stDataFrame { border-radius:10px; }
+/* couleur d'accent bleue, même si config.toml est absent */
+[data-baseweb="tag"] { background-color:#184f95 !important; }
+[data-baseweb="tag"] span, [data-baseweb="tag"] svg { color:#ffffff !important; }
+[data-testid="stSegmentedControl"] button[kind="segmented_controlActive"],
+[data-testid="stSegmentedControl"] button[aria-checked="true"], [data-testid="stSegmentedControl"] button[aria-pressed="true"] {
+  background:#e7effa !important; border-color:#256abf !important; color:#0d366b !important; }
 </style>
 """,
     unsafe_allow_html=True,
@@ -287,7 +313,9 @@ def build_colors(df: pd.DataFrame) -> tuple[dict, dict]:
 path = find_file("Data", "processed", "kharita_communes_nettoye.csv")
 raw_bytes = None
 with st.sidebar:
-    st.markdown("### Filtres")
+    st.markdown("<div class='brand'><div class='logo'>🗳️</div><div><div class='name'>Élections Maroc</div>"
+                "<div class='tag'>Communales 2015 · 2021</div></div></div>", unsafe_allow_html=True)
+    st.markdown("##### Filtres")
     if path is None:
         up = st.file_uploader("Charger kharita_communes_nettoye.csv", type="csv")
         if up is None:
@@ -329,18 +357,27 @@ YC = year_colors(sel_years)
 # ----------------------------------------------------------------------------
 # 5. En-tête + KPI
 # ----------------------------------------------------------------------------
-st.markdown("<div class='hero-title'>Élections communales au Maroc</div>", unsafe_allow_html=True)
+chips = [
+    "Scrutins " + " · ".join(map(str, sel_years)),
+    f"{fr(d['commune_code'].nunique(), 0)} communes",
+    (f"{len(sel_regions)} région(s) sélectionnée(s)" if sel_regions else "Toutes les régions"),
+]
+if sel_types:
+    chips.append(" / ".join(sel_types))
+chip_html = "".join("<span class='chip'>" + c + "</span>" for c in chips)
 st.markdown(
-    f"<div class='hero-sub'>Scrutins {' · '.join(map(str, sel_years))} — "
-    f"{d['commune_code'].nunique():,} communes".replace(",", " ")
-    + (f" — {len(sel_regions)} région(s) sélectionnée(s)" if sel_regions else " — toutes régions")
-    + "</div>",
+    "<div class='hero'><div class='eyebrow'>Tableau de bord · Kharita</div>"
+    "<div class='t'>Élections communales au Maroc</div>"
+    "<div class='meta'>" + chip_html + "</div></div>",
     unsafe_allow_html=True,
 )
 
 
 def kpi(label: str, value: str, delta: float | None = None, ref: str = "", unit: str = " pts",
         up_good: bool | None = True, sub: str | None = None) -> str:
+    mm = re.match(r"^(.*?)\s(%|pts)$", value)
+    if mm:
+        value = f"{mm.group(1)}<small>{mm.group(2)}</small>"
     dh = ""
     if delta is not None and not pd.isna(delta):
         arrow = "▲" if delta > 0 else ("▼" if delta < 0 else "■")
@@ -378,7 +415,11 @@ k[4].markdown(kpi("Parti le plus souvent en tête", str(top_party.index[0]),
 st.write("")
 
 SECTIONS = ["Vue d'ensemble", "Partis", "Cartes", "Élus", "Modèles ML", "Données"]
-section = st.radio("Section", SECTIONS, horizontal=True, label_visibility="collapsed")
+try:
+    section = st.segmented_control("Section", SECTIONS, default=SECTIONS[0], label_visibility="collapsed", key="section")
+except AttributeError:  # anciennes versions de Streamlit
+    section = st.radio("Section", SECTIONS, horizontal=True, label_visibility="collapsed")
+section = section or SECTIONS[0]
 st.write("")
 
 
@@ -395,9 +436,12 @@ def fig_hist(d: pd.DataFrame) -> go.Figure:
             hovertemplate=f"{y} · %{{x}} %<br>%{{y}} communes<extra></extra>"))
     for i, y in enumerate(sel_years):
         m = d.loc[d.year == y, "turnout_pct"].mean()
-        fig.add_vline(x=m, line=dict(color=YC[y], width=2, dash="dash"),
-                      annotation_text=f"Moy. {y} : {fr(m)} %", annotation_font=dict(color=INK2, size=11),
-                      annotation_position="top left" if i % 2 == 0 else "top right")
+        fig.add_vline(x=m, line=dict(color=YC[y], width=2, dash="dash"))
+        left = i % 2 == 0   # étiquettes de part et d'autre du trait, décalées en hauteur
+        fig.add_annotation(x=m, xref="x", y=1.0 - 0.1 * (i // 2), yref="paper", showarrow=False,
+                           text=f"Moy. {y} : {fr(m)} %", xanchor="right" if left else "left",
+                           xshift=-6 if left else 6, font=dict(color=INK, size=11),
+                           bgcolor="rgba(255,255,255,0.85)")
     fig.update_layout(barmode="overlay", bargap=0.04)
     fig.update_xaxes(title="Taux de participation (%)", ticksuffix=" %")
     fig.update_yaxes(title="Nombre de communes")

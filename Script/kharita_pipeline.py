@@ -23,7 +23,7 @@ def normalize_name(value):
 
 
 def load_raw(path=RAW):
-    frame = pd.read_csv(path, low_memory=False)
+    frame = pd.read_csv(path, encoding="utf-8-sig", low_memory=False)
     frame.columns = [normalize_name(c) for c in frame.columns]
     return frame
 
